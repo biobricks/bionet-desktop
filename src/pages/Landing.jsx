@@ -9,41 +9,24 @@ class Landing extends Component {
           <div className="col col-md-7 col-lg-5 ml-md-auto mr-md-auto text-center">
             <div className="card">
               <div className="card-header bg-dark text-light">
-                <h4 className="card-title mb-0">BioNet</h4>
+                <h4 className="card-title mb-0">Welcome To The BioNet!</h4>
               </div>
-              { this.props.isLoggedIn ? (
-                <div className="card-body">
-                  <p className="card-text">
-                    Welcome {this.props.currentUser.username}!<br/>
-                    What would you like to accomplish today?
-                  </p>
-                  <div className="btn-group-vertical" style={{'width': '100%'}}>
-                    <Link to="/sequence" className="btn btn-block btn-primary">Sequence</Link>
-                    <Link to="/build" className="btn btn-block btn-info">Build</Link>
-                    <Link to="/transform" className="btn btn-block btn-success">Transform</Link>
-                  </div>
-                </div>
-              ) : (
-                <div className="card-body">
-                  <p className="card-text">
-                    Welcome to BioNet! Please <Link to="/login">Login</Link> to continue.
-                  </p>
-                </div>                
-              )}  
-
-              { !this.props.isLoggedIn ? (
-                <ul className="list-group list-group-flush">
-                  <Link 
-                    className="list-group-item list-group-item-action bg-success text-light"
-                    to="/login"
-                  >Login</Link>
-                  <Link 
-                    className="list-group-item list-group-item-action bg-primary text-light"
-                    to="/signup"
-                  >Sign Up</Link>
-                </ul>
-              ) : null }
-
+              <div className="card-body">
+                <h2 className="card-title">A Free Biological Inventory Management System And Browser</h2>
+                <p className="card-text">
+                  Keep track of your stuff, find what you need, and share as you like. The bionet supports true asynchronous, peer-peer inventory management and sharing — all your inventory information is controlled locally by you. You decide if others can see what you wish to share. All BioNet software and associated materials are free to use.
+                </p>
+                <h2 class="card-title">How Does It Work?</h2>
+                <iframe 
+                  title="BioNet"
+                  width="100%" 
+                  height="400" 
+                  class="mt-1"
+                  src="https://www.youtube.com/embed/t29-RGggSU8?ecver=1" 
+                  frameborder="0" 
+                  allow="autoplay; encrypted-media" 
+                  allowfullscreen></iframe>
+              </div>
             </div>
           </div>
         </div>
