@@ -4,7 +4,7 @@ In Development. A React Desktop Client that interfaces with the [OpenFoundry API
 ## Install
 In your terminal:
 ```
-git clone https://github.com/matthewstewart/bionet-desktop.git && cd bionet-desktop
+git clone https://github.com/biobricks/bionet-desktop.git && cd bionet-desktop
 ```
 
 ### Install Modules
