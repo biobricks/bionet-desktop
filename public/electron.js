@@ -10,14 +10,16 @@ let mainWindow;
 createWindow = () => {
 	mainWindow = new BrowserWindow({
 		backgroundColor: '#F7F7F7',
-		minWidth: 880,
+		minHeight: 860,
+		minWidth: 1200,
 		show: false,
 		height: 860,
 		width: 1280,
 		webPreferences: {
 			nodeIntegration: false,
 			preload: __dirname + '/preload.js',
-		},		
+		},
+		icon: path.join(__dirname, 'assets/icons/png/64x64.png')		
 	});
 
 	mainWindow.loadURL(
