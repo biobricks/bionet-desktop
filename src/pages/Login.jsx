@@ -66,7 +66,7 @@ class Login extends Component {
   }
 
   render() {
-    if(this.state.redirect){ return( <Redirect to="/profile" /> ) }
+    if(this.state.redirect){ return( <Redirect to={`/users/${this.props.currentUser._id}`} /> ) }
     return (
       <div className="container-fluid">
         <div className="row mt-3">
