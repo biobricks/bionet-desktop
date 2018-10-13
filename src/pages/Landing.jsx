@@ -15,16 +15,16 @@ class Landing extends Component {
                 <p className="card-text">
                   Keep track of your stuff, find what you need, and share as you like. The bionet supports true asynchronous, peer-peer inventory management and sharing — all your inventory information is controlled locally by you. You decide if others can see what you wish to share. All BioNet software and associated materials are free to use.
                 </p>
-                <h2 class="card-title">How Does It Work?</h2>
+                <h2 className="card-title">How Does It Work?</h2>
                 <iframe 
                   title="BioNet"
                   width="100%" 
                   height="400" 
-                  class="mt-1"
+                  className="mt-1"
                   src="https://www.youtube.com/embed/t29-RGggSU8?ecver=1" 
-                  frameborder="0" 
+                  frameBorder="0" 
                   allow="autoplay; encrypted-media" 
-                  allowfullscreen></iframe>
+                  allowFullScreen></iframe>
               </div>
             </div>
           </div>

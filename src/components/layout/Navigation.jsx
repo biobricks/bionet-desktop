@@ -23,7 +23,7 @@ class Navigation extends Component {
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <h5 className="dropdown-header">ToDo: Add Admin Menu</h5>
                   <div className="dropdown-divider"></div>
-                  <Link className="dropdown-item" to={`/users/${this.props.currentUser._id}`}>Profile</Link>
+                  <Link className="dropdown-item" to="/users">Users</Link>
                 </div>
               </li>
             ) : null }

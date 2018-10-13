@@ -6,6 +6,7 @@ import Landing from '../pages/Landing';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import UserProfile from '../pages/UserProfile';
+import UserList from '../pages/UserList';
 
 class Routes extends Component {
   render() {
@@ -20,6 +21,9 @@ class Routes extends Component {
     };
     const userProfile = (params) => {
       return ( <UserProfile {...this.props} match={params.match}/> );
+    };
+    const userList = (params) => {
+      return ( <UserList {...this.props} match={params.match}/> );
     }; 
     return (
       <main>
@@ -31,7 +35,8 @@ class Routes extends Component {
         </Switch>
 
         <Switch>
-          <Route exact path='/users/:userId' render={userProfile} />
+          <Route path='/users/:userId' render={userProfile} />
+          <Route exact path='/users' render={userList} />
         </Switch>
 
       </main>
