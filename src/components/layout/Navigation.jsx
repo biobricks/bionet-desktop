@@ -21,9 +21,10 @@ class Navigation extends Component {
                   Admin
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <h5 className="dropdown-header">Users</h5>
+                  <h5 className="dropdown-header">List</h5>
                   <div className="dropdown-divider"></div>
-                  <Link className="dropdown-item" to="/users">List All Users</Link>
+                  <Link className="dropdown-item" to="/users">Users</Link>
+                  <Link className="dropdown-item" to="/freezers">Freezers</Link>
                 </div>
               </li>
             ) : null }

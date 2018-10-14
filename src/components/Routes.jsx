@@ -3,17 +3,24 @@ import { Switch, Route } from 'react-router-dom';
 
 // pages
 import Landing from '../pages/Landing';
+
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+
 import UserProfile from '../pages/UserProfile';
 import UserProfileEdit from '../pages/UserProfileEdit';
 import UserList from '../pages/UserList';
 
+import FreezerNew from '../pages/FreezerNew';
+import FreezerList from '../pages/FreezerList';
+
 class Routes extends Component {
   render() {
+    
     const landing = () => {
       return ( <Landing {...this.props} /> );
     };
+    
     const login = () => {
       return ( <Login {...this.props} /> );
     };
@@ -28,7 +35,14 @@ class Routes extends Component {
     };
     const userList = (params) => {
       return ( <UserList {...this.props} match={params.match}/> );
-    }; 
+    };
+    
+    const freezerNew = () => {
+      return ( <FreezerNew {...this.props}/> );
+    };
+    const freezerList = (params) => {
+      return ( <FreezerList {...this.props} match={params.match}/> );
+    };
     return (
       <main>
 
@@ -42,6 +56,11 @@ class Routes extends Component {
           <Route path='/users/:userId/edit' render={userProfileEdit} />
           <Route path='/users/:userId' render={userProfile} />
           <Route exact path='/users' render={userList} />
+        </Switch>
+
+        <Switch>
+        <Route exact path='/freezers/new' render={freezerNew} />
+          <Route exact path='/freezers' render={freezerList} />
         </Switch>
 
       </main>

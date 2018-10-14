@@ -69,7 +69,7 @@ class Login extends Component {
     if(this.state.redirect && Object.keys(this.props.currentUser).length > 0){ 
       console.log('this.props.currentUser', this.props.currentUser);
       console.log(`Redirecting to /users/${this.props.currentUser._id}`);
-      return( <Redirect to={`/users/${this.props.currentUser._id}`} /> ) 
+      return( <Redirect to={`/`} /> ) 
     }
     return (
       <div className="container-fluid">
