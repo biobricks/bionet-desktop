@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-//import UserProfile from '../components/partials/UserProfile';
+import AlertCard from '../components/partials/AlertCard';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import axios from 'axios';
 
 class UserProfilePage extends Component {
@@ -8,7 +9,7 @@ class UserProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: []
+      user: {}
     };
     this.getUser = this.getUser.bind(this);
   }
@@ -17,12 +18,15 @@ class UserProfilePage extends Component {
     axios.get(`https://api.biohacking.services/users/${this.props.match.params.userId}`)
     .then(res => {
       console.log(res.data);
+      let user = res.data.data;
+      let createdDate = new Date(user.createdAt);
+      user['createdFromNow'] = moment(createdDate).fromNow();
       this.setState({
-        user: res.data.data
+        user
       });        
     })
     .catch(error => {
-        console.error(error);        
+      console.error(error);        
     });    
   }
 
@@ -35,20 +39,29 @@ class UserProfilePage extends Component {
       <div className="container-fluid">
         <div className="row mt-3">
           <div className="col col-md-9 col-lg-7 ml-md-auto mr-md-auto text-center">
-            <div className="card">
-              <div className="card-header bg-dark text-light">
-                <h4 className="card-title mb-0">{this.props.currentUser.username}</h4>
+            {(this.props.isLoggedIn) ? (
+              <div className="card">
+                <div className="card-header bg-dark text-light">
+                  <h4 className="card-title mb-0">{this.state.user.username}</h4>
+                </div>
+                <div className="card-body">
+                  <p className="card-text">
+                    {this.state.user.isAdmin && ( "Admin - " )}
+                    joined {this.state.user.createdFromNow}
+                  </p>
+                  {(this.props.isLoggedIn && this.props.currentUser.isAdmin) ? (
+                    <Link to={'/edit'}>Edit</Link>
+                  ) : null }
+                </div>
               </div>
-              <div className="card-body">
-                <p className="card-text">
-                  {this.props.currentUser.isAdmin && ( "Lab Admin - " )}
-                  joined {this.props.currentUser.createdFromNow}
-                </p>
-                {(this.props.isLoggedIn && this.props.currentUser.isAdmin) ? (
-                  <Link to={'/edit'}>Edit</Link>
-                ) : null }
-              </div>
-            </div>
+            ) : (
+              <AlertCard 
+                title="Login Required"
+                message="You must be logged in to view this content."
+              />
+            )}
+
+
           </div>
         </div>
 
