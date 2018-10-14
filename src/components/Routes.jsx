@@ -6,6 +6,7 @@ import Landing from '../pages/Landing';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import UserProfile from '../pages/UserProfile';
+import UserProfileEdit from '../pages/UserProfileEdit';
 import UserList from '../pages/UserList';
 
 class Routes extends Component {
@@ -22,6 +23,9 @@ class Routes extends Component {
     const userProfile = (params) => {
       return ( <UserProfile {...this.props} match={params.match}/> );
     };
+    const userProfileEdit = (params) => {
+      return ( <UserProfileEdit {...this.props} match={params.match}/> );
+    };
     const userList = (params) => {
       return ( <UserList {...this.props} match={params.match}/> );
     }; 
@@ -35,6 +39,7 @@ class Routes extends Component {
         </Switch>
 
         <Switch>
+          <Route path='/users/:userId/edit' render={userProfileEdit} />
           <Route path='/users/:userId' render={userProfile} />
           <Route exact path='/users' render={userList} />
         </Switch>

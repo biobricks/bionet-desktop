@@ -10,7 +10,9 @@ class Signup extends Component {
       user: {
         username: "",
         password: "",
-        passwordConfirm: ""
+        passwordConfirm: "",
+        email: "",
+        name: ""
       },
       errors: {},
     };
@@ -19,8 +21,8 @@ class Signup extends Component {
   }
 
   changeUser(e) {
-    const field = e.target.name;
-    const user = this.state.user;
+    const field = e.target.getAttribute('name');
+    let user = this.state.user;
     user[field] = e.target.value;
     this.setState({
       user
@@ -30,8 +32,10 @@ class Signup extends Component {
   processForm(e) {
     e.preventDefault();
     const username = encodeURIComponent(this.state.user.username);
+    const name = encodeURIComponent(this.state.user.name);
+    const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
-    const formData = `username=${username}&password=${password}`;
+    const formData = `username=${username}&password=${password}&name=${name}&email=${email}`;
     const xhr = new XMLHttpRequest();
     xhr.open('post', 'https://api.biohacking.services/signup');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -72,6 +76,30 @@ class Signup extends Component {
                 </p>
                 <form onSubmit={ this.processForm }>
                   {this.state.errors.summary && <div className="alert alert-danger">{ this.state.errors.summary }</div>}
+                  <div className="form-group">
+                    <label htmlFor="name">Name</label>
+                    <input 
+                      type="text"
+                      className="form-control"
+                      name="name"
+                      placeholder="Your Full Name"
+                      value={this.state.user.name}
+                      onChange={this.changeUser}
+                    />
+                    {this.state.errors.name && <small className="text-danger">{this.state.errors.name}</small>}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="name">Email</label>
+                    <input 
+                      type="text"
+                      className="form-control"
+                      name="email"
+                      placeholder="youremailaddress@example.com"
+                      value={this.state.user.email}
+                      onChange={this.changeUser}
+                    />
+                    {this.state.errors.email && <small className="text-danger">{this.state.errors.email}</small>}
+                  </div>
                   <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <input 
@@ -117,6 +145,8 @@ class Signup extends Component {
                       ) : null }
                   </div>
                   {(
+                    this.state.user.name.length > 0 && 
+                    this.state.user.email.length > 0 && 
                     this.state.user.username.length > 0 && 
                     this.state.user.password.length > 0 &&
                     this.state.user.passwordConfirm.length > 0 &&

@@ -49,10 +49,15 @@ class UserProfilePage extends Component {
                     {this.state.user.isAdmin && ( "Admin - " )}
                     joined {this.state.user.createdFromNow}
                   </p>
-                  {(this.props.isLoggedIn && this.props.currentUser.isAdmin) ? (
-                    <Link to={'/edit'}>Edit</Link>
-                  ) : null }
                 </div>
+                {(this.props.isLoggedIn && this.props.currentUser.isAdmin) ? (
+                  <ul className="list-group list-group-flush">
+                    <Link 
+                      className="list-group-item list-group-item-action bg-primary text-light"
+                      to={`/users/${this.state.user._id}/edit`}
+                    >Edit</Link>                  
+                  </ul>
+                ) : null } 
               </div>
             ) : (
               <AlertCard 
