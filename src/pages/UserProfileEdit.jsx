@@ -15,6 +15,7 @@ class UserProfileEditPage extends Component {
         username: "",
         email: "",
         name: "",
+        isAdmin: false,
         imageUrl: ""
       }
     };
@@ -22,6 +23,7 @@ class UserProfileEditPage extends Component {
     this.onFormInput = this.onFormInput.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.toggleIsAdmin = this.toggleIsAdmin.bind(this);
   }
 
   getUser() {
@@ -59,6 +61,7 @@ class UserProfileEditPage extends Component {
         username: "",
         email: "",
         name: "",
+        isAdmin: false,
         imageUrl: ""
       }
     });
@@ -82,6 +85,14 @@ class UserProfileEditPage extends Component {
     });
   }
 
+  toggleIsAdmin() {
+    let form = this.state.form;
+    form.isAdmin = !this.state.form.isAdmin;
+    this.setState({
+      form
+    });
+  }
+
   componentDidMount() {
     this.getUser();
   }  
@@ -102,11 +113,61 @@ class UserProfileEditPage extends Component {
                       <label htmlFor="name">Name</label>
                       <input 
                         name="name"
+                        type="text"
                         className="form-control"
                         value={this.state.form.name}
                         onChange={this.onFormInput}
                         placeholder="Your Full Name"
                       />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="email">Email</label>
+                      <input 
+                        name="email"
+                        type="text"
+                        className="form-control"
+                        value={this.state.form.email}
+                        onChange={this.onFormInput}
+                        placeholder="youremailaddress@example.com"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="name">Username</label>
+                      <input 
+                        name="username"
+                        type="text" 
+                        className="form-control"
+                        value={this.state.form.username}
+                        onChange={this.onFormInput}
+                        placeholder="username"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="imageUrl">Profile Image URL</label>
+                      <input 
+                        name="imageUrl"
+                        type="text" 
+                        className="form-control"
+                        value={this.state.form.imageUrl}
+                        onChange={this.onFormInput}
+                        placeholder="http://anywebsite.com/theImageIwantAsAProfileImage.png"
+                      />
+                    </div>
+                    <div className="form-check">
+                      <input 
+                        name="isAdmin"
+                        type="checkbox" 
+                        className="form-check-input" 
+                        value={this.state.form.isAdmin} 
+                        checked={this.state.form.isAdmin}
+                        onChange={this.toggleIsAdmin}
+                      />
+                      <label className="form-check-label" htmlFor="isAdmin">
+                        Has Administrator Access
+                      </label>
+                    </div>                                                           
+                    <div className="form-group">
+                      <button type="submit" className="btn btn-success mt-3">Save</button>
                     </div>
                   </form>
                 </div>
