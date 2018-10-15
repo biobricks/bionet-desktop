@@ -2,13 +2,34 @@ import React, { Component } from "react";
 import ReactFileReader from "react-file-reader";
 
 class Cvsfrom extends Component {
-  state = {};
   constructor() {
     super();
-    this.state = {};
+    this.state = { namesArray: [], submittedFiles: [] };
+    this.handleSubmitedFiles = this.handleSubmitedFiles.bind(this);
+    this.showUploadedFiles = this.showUploadedFiles.bind(this);
   }
   handleSubmitedFiles = files => {
-    console.log(files.base64);
+    // console.log(files.base64);
+    // console.log(files.fileList):
+    let namesArray = [];
+    const filesObject = files.fileList;
+    this.setState({ submittedFiles: filesObject });
+    for (let i = 0; i < this.state.submittedFiles.length; i++) {
+      namesArray.push(this.state.submittedFiles[i].name);
+      this.setState({ namesArray });
+    }
+  };
+
+  showUploadedFiles = () => {
+    return (
+      <ul className="list-group">
+        {this.state.namesArray.map((name, index) => (
+          <li className="list-group-item text-left" key={index}>
+            {name}
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   render() {
@@ -35,6 +56,7 @@ class Cvsfrom extends Component {
                   <button className="btn">Upload</button>
                 </ReactFileReader>
               </div>
+              {this.showUploadedFiles()}
             </div>
           </div>
         </div>
