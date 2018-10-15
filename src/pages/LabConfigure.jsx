@@ -84,6 +84,9 @@ class LabConfigure extends Component {
                   <h4 className="card-title mb-0">Configure Lab</h4>
                 </div>
                 <div className="card-body">
+                  <p className="card-text">
+                    Let's setup your first Lab! Your Lab will need:
+                  </p>  
                   <form onSubmit={this.handleFormSubmit}>
 
                     <div className="form-group">
@@ -95,6 +98,7 @@ class LabConfigure extends Component {
                         onChange={this.updateField}
                         placeholder="Lab Name"
                       />
+                      <small className="form-text text-muted">Required - The name of your Lab. This will be public and visible to other Labs.</small>
                     </div>
 
                     <div className="form-group">
@@ -107,6 +111,7 @@ class LabConfigure extends Component {
                         onChange={this.updateField}
                         placeholder="A short description of the Lab."
                       />
+                      <small className="form-text text-muted">Optional - Share a bit more detail on your Lab. Visible to the public and other Labs.</small>
                     </div>
 
                     <div className="form-group">
@@ -118,9 +123,10 @@ class LabConfigure extends Component {
                         value={this.state.form.columns}
                         onChange={this.updateField}
                         min="1"
-                        max="100"
+                        max="50"
                         step="1"
                       />
+                      <small className="form-text text-muted">Required - The number of columns in the grid representing your Lab area from a top-down view.</small>
                     </div>
 
                     <div className="form-group">
@@ -132,9 +138,10 @@ class LabConfigure extends Component {
                         value={this.state.form.rows}
                         onChange={this.updateField}
                         min="1"
-                        max="100"
+                        max="50"
                         step="1"
                       />
+                      <small className="form-text text-muted">Required - The number of rows in the grid representing your Lab area from a top-down view.</small>
                     </div>
 
                     <div className="form-group text-center">
