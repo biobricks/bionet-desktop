@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Landing extends Component {
   render() {
@@ -11,25 +11,32 @@ class Landing extends Component {
                 <h4 className="card-title mb-0">Welcome To The BioNet!</h4>
               </div>
               <div className="card-body">
-                <h2 className="card-title">A Free Biological Inventory Management System And Browser</h2>
+                <h2 className="card-title">
+                  A Free Biological Inventory Management System And Browser
+                </h2>
                 <p className="card-text">
-                  Keep track of your stuff, find what you need, and share as you like. The bionet supports true asynchronous, peer-peer inventory management and sharing — all your inventory information is controlled locally by you. You decide if others can see what you wish to share. All BioNet software and associated materials are free to use.
+                  Keep track of your stuff, find what you need, and share as you
+                  like. The bionet supports true asynchronous, peer-peer
+                  inventory management and sharing — all your inventory
+                  information is controlled locally by you. You decide if others
+                  can see what you wish to share. All BioNet software and
+                  associated materials are free to use.
                 </p>
                 <h2 className="card-title">How Does It Work?</h2>
-                <iframe 
+                <iframe
                   title="BioNet"
-                  width="100%" 
-                  height="400" 
+                  width="100%"
+                  height="400"
                   className="mt-1"
-                  src="https://www.youtube.com/embed/t29-RGggSU8?ecver=1" 
-                  frameBorder="0" 
-                  allow="autoplay; encrypted-media" 
-                  allowFullScreen></iframe>
+                  src="https://www.youtube.com/embed/t29-RGggSU8?ecver=1"
+                  frameBorder="0"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                />
               </div>
             </div>
           </div>
         </div>
-
       </div>
     );
   }
