@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Auth from '../modules/Auth';
 import AlertCard from '../components/partials/AlertCard';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -10,6 +10,8 @@ class UserProfileEditPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      redirect: false,
+      redirectTo: "",
       user: {},
       form: {
         username: "",
@@ -79,6 +81,7 @@ class UserProfileEditPage extends Component {
     axios.post(`https://api.biohacking.services/users/${this.props.match.params.userId}/edit`, form, config)
     .then(res => {
       console.log(res.data);
+      this.setState({ redirect: true })
     })
     .catch(error => {
       console.error(error);
@@ -98,6 +101,9 @@ class UserProfileEditPage extends Component {
   }  
 
   render() {
+    if (this.state.redirect === true) {
+      return ( <Redirect to={`/users/${this.props.match.params.userId}`}/> )
+    }    
     return (
       <div className="container-fluid">
         <div className="row mt-3">
