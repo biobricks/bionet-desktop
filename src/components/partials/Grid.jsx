@@ -51,7 +51,6 @@ class Grid extends Component {
         </div>
         <div className="card-body">
           <p className="card-text">
-            {this.props.record.description || this.props.demo ? "(Select A Lab Description - Optional)" : null }
             {this.props.record.description.length > 0 ? this.props.record.description : (this.props.demo ? "(Select A Lab Description - Optional)" : null)}
           </p>
           <div className="grid-container" style={gridContainerStyles}>
