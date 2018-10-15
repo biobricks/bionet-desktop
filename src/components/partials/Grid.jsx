@@ -46,12 +46,12 @@ class Grid extends Component {
       <div className="card mt-3">
         <div className="card-header bg-dark text-light">
           <h4 className="card-title mb-0 text-capitalize">
-            {this.props.record.name.length > 0 ? this.props.record.name : (this.props.demo ? "(Select A Lab Name)" : "Loading...")}
+            {this.props.record.name.length > 0 ? this.props.record.name : (this.props.demo ? `(Select A ${this.props.recordType} Name)` : "Loading...")}
           </h4>
         </div>
         <div className="card-body">
           <p className="card-text">
-            {this.props.record.description.length > 0 ? this.props.record.description : (this.props.demo ? "(Select A Lab Description - Optional)" : null)}
+            {this.props.record.description.length > 0 ? this.props.record.description : (this.props.demo ? `(Select A ${this.props.recordType} Description - Optional)` : null)}
           </p>
           <div className="grid-container" style={gridContainerStyles}>
             {gridContainerChildren}

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import Grid from '../components/partials/Grid';
 
-class LabConfigure extends Component {
+class ContainerTutorial extends Component {
   
   constructor(props) {
     super(props);
@@ -19,9 +19,23 @@ class LabConfigure extends Component {
         columns: 1
       }
     };
+    this.getLab = this.getLab.bind(this);
     this.updateField = this.updateField.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  getLab() {
+    axios.get(`https://api.biohacking.services/labs/${this.props.match.params.labId}`)
+    .then(res => {
+      console.log("response", res.data);
+      this.setState({
+        lab: res.data.data
+      });        
+    })
+    .catch(error => {
+      console.error(error);        
+    });    
   }
 
   updateField(e) {
@@ -47,10 +61,7 @@ class LabConfigure extends Component {
       };  
       axios.post('https://api.biohacking.services/labs/new', formData, config)
       .then(res => {     
-        this.setState({ 
-          lab: res.data.data,
-          redirect: true 
-        });
+        this.setState({ redirect: true });
       })
       .catch(error => {
         console.error(error);
@@ -73,11 +84,13 @@ class LabConfigure extends Component {
     this.submitForm(form);
   }
 
+  componentDidMount() {
+    this.getLab();
+  }  
+
   render() { 
-    let form = this.state.form;
-    let formValid = form.name.length > 0 && form.rows > 1 && form.columns > 1;
     if (this.state.redirect === true) {
-      return ( <Redirect to={`/tutorials/${this.state.lab._id}/container`}/> )
+      return ( <Redirect to="/freezers"/> )
     }
     return (
       <div className="container-fluid">
@@ -87,24 +100,31 @@ class LabConfigure extends Component {
             { (this.props.isLoggedIn) ? (
               <div className="card mt-3">
                 <div className="card-header bg-dark text-light">
-                  <h4 className="card-title mb-0">Configure Lab</h4>
+                  <h4 className="card-title mb-0">Create Your First Container</h4>
                 </div>
                 <div className="card-body">
                   <p className="card-text">
-                    Let's setup your first Lab! Your Lab will need:
+                    Let's setup a Container within {this.state.lab.name}! Your Container will need:
                   </p>  
                   <form onSubmit={this.handleFormSubmit}>
+
+                    <input 
+                      name="parent"
+                      type="hidden"
+                      value={this.state.lab._id}
+                    />
 
                     <div className="form-group">
                       <label htmlFor="name">Name</label>
                       <input 
                         name="name"
+                        type="text"
                         className="form-control"
                         value={this.state.form.name}
                         onChange={this.updateField}
-                        placeholder="Lab Name"
+                        placeholder="Container Name"
                       />
-                      <small className="form-text text-muted">Required - The name of your Lab. This will be public and visible to other Labs.</small>
+                      <small className="form-text text-muted">Required - The name of your Container. This will be public and visible to other Labs.</small>
                     </div>
 
                     <div className="form-group">
@@ -115,9 +135,9 @@ class LabConfigure extends Component {
                         className="form-control"
                         value={this.state.form.description}
                         onChange={this.updateField}
-                        placeholder="A short description of the Lab."
+                        placeholder="A short description of the Container."
                       />
-                      <small className="form-text text-muted">Optional - Share a bit more detail on your Lab. Visible to the public and other Labs.</small>
+                      <small className="form-text text-muted">Optional - Share a bit more detail on your Container. Visible to the public and other Labs.</small>
                     </div>
 
                     <div className="form-group">
@@ -132,9 +152,7 @@ class LabConfigure extends Component {
                         max="50"
                         step="1"
                       />
-                      <small className="form-text text-muted">
-                        Required - The number of columns in the grid representing your Lab area from a top-down view. Change to a value greater than 1.
-                      </small>
+                      <small className="form-text text-muted">Required - The number of columns in the grid representing your Container area from a top-down view.</small>
                     </div>
 
                     <div className="form-group">
@@ -149,17 +167,13 @@ class LabConfigure extends Component {
                         max="50"
                         step="1"
                       />
-                      <small className="form-text text-muted">Required - The number of rows in the grid representing your Lab area from a top-down view. Change to a value greater than 1.</small>
+                      <small className="form-text text-muted">Required - The number of rows in the grid representing your Container area from a top-down view.</small>
                     </div>
 
                     <div className="form-group text-center">
                       <div className="btn-group" role="group" aria-label="Basic example">
-                        <Link to="/" className="btn btn-secondary mt-3">Back</Link>
-                        <button 
-                          type="submit" 
-                          className="btn btn-success mt-3"
-                          disabled={!formValid}
-                        >Submit</button>
+                        <Link to="/" className="btn btn-secondary mt-3">Exit Tutorial</Link>
+                        <button type="submit" className="btn btn-success mt-3" disabled={true}>Submit</button>
                       </div>  
                     </div>                    
 
@@ -172,7 +186,7 @@ class LabConfigure extends Component {
           <div className="col-12 col-md-5">
             <Grid 
               demo={true}
-              recordType="Lab"
+              recordType="Container"
               record={this.state.form}
             />
           </div>
@@ -183,4 +197,4 @@ class LabConfigure extends Component {
   }
 }
 
-export default LabConfigure;
+export default ContainerTutorial;

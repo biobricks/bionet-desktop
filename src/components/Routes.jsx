@@ -10,6 +10,9 @@ import UserProfileEdit from "../pages/UserProfileEdit";
 import UserList from "../pages/UserList";
 import Cvsform from "../pages/Cvsform";
 
+import ContainerTutorial from '../pages/ContainerTutorial';
+
+import FreezerTutorial from '../pages/FreezerTutorial';
 import FreezerNew from '../pages/FreezerNew';
 import FreezerList from '../pages/FreezerList';
 
@@ -47,6 +50,13 @@ class Routes extends Component {
       return ( <LabConfigure {...this.props}/> );
     };    
 
+    const containerTutorial = (params) => {
+      return ( <ContainerTutorial {...this.props} match={params.match}/> );
+    };
+
+    const freezerTutorial = () => {
+      return ( <FreezerTutorial {...this.props}/> );
+    };
     const freezerNew = () => {
       return ( <FreezerNew {...this.props}/> );
     };
@@ -78,6 +88,10 @@ class Routes extends Component {
           <Route exact path='/labs/configure' render={labConfigure} />
         </Switch>        
         
+        <Switch>
+          <Route exact path='/tutorials/:labId/container' render={containerTutorial} />
+          <Route exact path='/tutorials/freezer' render={freezerTutorial} />
+        </Switch> 
 
       </main>
     );
