@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
+import shortid from 'shortid';
 import './Grid.css';
 
 
@@ -7,14 +8,12 @@ class Grid extends Component {
 
   render() {
 
-
     const record = this.props.record || null;
     const gridContainerStyles = {
       'gridTemplateColumns': record ? `repeat(${record.columns}, 1fr)` : '1fr',
       'gridTemplateRows': record ? `repeat(${record.rows}, 1fr)` : '1fr',
     };
     let gridContainerChildren = [];
-    const gridCellCount = record.columns * record.rows;
     let positionCounter = 1;
     for(let rowNo = 1; rowNo <= record.rows; rowNo++){
       for(let colNo = 1; colNo <= record.columns; colNo++){
@@ -28,7 +27,8 @@ class Grid extends Component {
         //let isSelectedNewLocation = this.props.mode === 'new' && rowNo === Number(this.props.newItemY) && colNo === Number(this.props.newItemX);
         gridContainerChildren.push(
           <div 
-            class={'empty grid-item'}
+            key={shortid.generate()}
+            className={'empty grid-item'}
             style={emptyChildStyles}
             row={rowNo}
             col={colNo}
@@ -45,11 +45,14 @@ class Grid extends Component {
     return (
       <div className="card mt-3">
         <div className="card-header bg-dark text-light">
-          <h4 className="card-title mb-0 text-capitalize">{this.props.record.name || "(Select A Lab Name)"}</h4>
+          <h4 className="card-title mb-0 text-capitalize">
+            {this.props.record.name.length > 0 ? this.props.record.name : (this.props.demo ? "(Select A Lab Name)" : "Loading...")}
+          </h4>
         </div>
         <div className="card-body">
           <p className="card-text">
-            {this.props.record.description || "(Select A Lab Description - Optional)"}
+            {this.props.record.description || this.props.demo ? "(Select A Lab Description - Optional)" : null }
+            {this.props.record.description.length > 0 ? this.props.record.description : (this.props.demo ? "(Select A Lab Description - Optional)" : null)}
           </p>
           <div className="grid-container" style={gridContainerStyles}>
             {gridContainerChildren}

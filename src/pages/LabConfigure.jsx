@@ -152,7 +152,7 @@ class LabConfigure extends Component {
 
           <div className="col-12 col-md-5">
             <Grid 
-              {...this.props}
+              demo={true}
               record={this.state.form}
             />
           </div>
