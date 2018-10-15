@@ -1,0 +1,12 @@
+.grid-container {
+  display: grid;
+  width: 100%;
+  border: 1px solid #ccc;
+  min-height: 60vh;
+}
+
+.grid-container .grid-item {
+  background-color: white;
+  border: 1px solid #bbb;
+  overflow: hidden; 
+}

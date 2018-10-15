@@ -14,6 +14,8 @@ import UserList from '../pages/UserList';
 import FreezerNew from '../pages/FreezerNew';
 import FreezerList from '../pages/FreezerList';
 
+import LabConfigure from '../pages/LabConfigure';
+
 class Routes extends Component {
   render() {
     
@@ -36,7 +38,11 @@ class Routes extends Component {
     const userList = (params) => {
       return ( <UserList {...this.props} match={params.match}/> );
     };
-    
+
+    const labConfigure = () => {
+      return ( <LabConfigure {...this.props}/> );
+    };    
+
     const freezerNew = () => {
       return ( <FreezerNew {...this.props}/> );
     };
@@ -59,8 +65,12 @@ class Routes extends Component {
         </Switch>
 
         <Switch>
-        <Route exact path='/freezers/new' render={freezerNew} />
+          <Route exact path='/freezers/new' render={freezerNew} />
           <Route exact path='/freezers' render={freezerList} />
+        </Switch>
+
+        <Switch>
+          <Route exact path='/labs/configure' render={labConfigure} />
         </Switch>
 
       </main>
