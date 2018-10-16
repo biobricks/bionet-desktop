@@ -78,8 +78,8 @@ class LabProfile extends Component {
                   <h4 className="card-title mb-0">
                     <i className="mdi mdi-teach mr-2" />
                     {this.state.lab.name}
-                    <small className="float-right btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                      <div className="btn-group" role="group" aria-label="First group">
+                    <small className="float-right btn-toolbar" role="toolbar">
+                      <div className="btn-group" role="group">
                         <Link 
                           to={`/labs/${this.props.match.params.labId}/edit`}
                           type="button" 
@@ -88,10 +88,38 @@ class LabProfile extends Component {
                           <i className="mdi mdi-playlist-edit mr-1" />
                           Edit
                         </Link>
-                        <button type="button" className="btn btn-sm btn-success">
-                          <i className="mdi mdi-plus-box mr-1" />
-                          Add
-                        </button>
+                        <div className="btn-group" role="group">
+                          <button 
+                            id="add-button" 
+                            type="button" 
+                            className="btn btn-sm btn-success dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i className="mdi mdi-plus-box mr-1" />
+                            Add&nbsp;
+                          </button>
+                          <div
+                            className="dropdown-menu"
+                            aria-labelledby="add-button"
+                          >
+                            <Link 
+                              to={`/labs/${this.props.match.params.labId}/add/container`}
+                              className="dropdown-item"
+                            >
+                              <i className="mdi mdi-grid mr-2"/>
+                              Container
+                            </Link>
+                            <Link 
+                              to={`/labs/${this.props.match.params.labId}/add/physical`}
+                              className="dropdown-item"
+                            >
+                              <i className="mdi mdi-flask mr-2"/>
+                              Physical
+                            </Link>
+                          </div>
+                        </div>  
                         <button type="button" className="btn btn-sm btn-danger">
                           <i className="mdi mdi-minus-box mr-1" />
                           Remove
