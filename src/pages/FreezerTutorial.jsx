@@ -5,13 +5,12 @@ import axios from 'axios';
 
 import Grid from '../components/partials/Grid';
 
-class LabConfigure extends Component {
+class FreezerTutorial extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
       redirect: false,
-      lab: {},
       form: {
         name: "",
         description: "",
@@ -47,10 +46,7 @@ class LabConfigure extends Component {
       };  
       axios.post('https://api.biohacking.services/labs/new', formData, config)
       .then(res => {     
-        this.setState({ 
-          lab: res.data.data,
-          redirect: true 
-        });
+        this.setState({ redirect: true });
       })
       .catch(error => {
         console.error(error);
@@ -74,10 +70,8 @@ class LabConfigure extends Component {
   }
 
   render() { 
-    let form = this.state.form;
-    let formValid = form.name.length > 0 && form.rows > 1 && form.columns > 1;
     if (this.state.redirect === true) {
-      return ( <Redirect to={`/tutorials/${this.state.lab._id}/container`}/> )
+      return ( <Redirect to="/freezers"/> )
     }
     return (
       <div className="container-fluid">
@@ -87,11 +81,11 @@ class LabConfigure extends Component {
             { (this.props.isLoggedIn) ? (
               <div className="card mt-3">
                 <div className="card-header bg-dark text-light">
-                  <h4 className="card-title mb-0">Configure Lab</h4>
+                  <h4 className="card-title mb-0">Create Your First Freezer</h4>
                 </div>
                 <div className="card-body">
                   <p className="card-text">
-                    Let's setup your first Lab! Your Lab will need:
+                    Let's setup your first Freezer within your Lab! Your Freezer will need:
                   </p>  
                   <form onSubmit={this.handleFormSubmit}>
 
@@ -132,9 +126,7 @@ class LabConfigure extends Component {
                         max="50"
                         step="1"
                       />
-                      <small className="form-text text-muted">
-                        Required - The number of columns in the grid representing your Lab area from a top-down view. Change to a value greater than 1.
-                      </small>
+                      <small className="form-text text-muted">Required - The number of columns in the grid representing your Lab area from a top-down view.</small>
                     </div>
 
                     <div className="form-group">
@@ -149,17 +141,13 @@ class LabConfigure extends Component {
                         max="50"
                         step="1"
                       />
-                      <small className="form-text text-muted">Required - The number of rows in the grid representing your Lab area from a top-down view. Change to a value greater than 1.</small>
+                      <small className="form-text text-muted">Required - The number of rows in the grid representing your Lab area from a top-down view.</small>
                     </div>
 
                     <div className="form-group text-center">
                       <div className="btn-group" role="group" aria-label="Basic example">
                         <Link to="/" className="btn btn-secondary mt-3">Back</Link>
-                        <button 
-                          type="submit" 
-                          className="btn btn-success mt-3"
-                          disabled={!formValid}
-                        >Submit</button>
+                        <button type="submit" className="btn btn-success mt-3">Submit</button>
                       </div>  
                     </div>                    
 
@@ -172,7 +160,7 @@ class LabConfigure extends Component {
           <div className="col-12 col-md-5">
             <Grid 
               demo={true}
-              recordType="Lab"
+              recordType="Freezer"
               record={this.state.form}
             />
           </div>
@@ -183,4 +171,4 @@ class LabConfigure extends Component {
   }
 }
 
-export default LabConfigure;
+export default FreezerTutorial;

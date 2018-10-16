@@ -10,10 +10,17 @@ import UserProfileEdit from "../pages/UserProfileEdit";
 import UserList from "../pages/UserList";
 import Csvform from "../pages/Csvform";
 
-import FreezerNew from "../pages/FreezerNew";
-import FreezerList from "../pages/FreezerList";
+import ContainerTutorial from '../pages/ContainerTutorial';
 
-import LabConfigure from "../pages/LabConfigure";
+import FreezerTutorial from '../pages/FreezerTutorial';
+import FreezerNew from '../pages/FreezerNew';
+import FreezerList from '../pages/FreezerList';
+
+import LabConfigure from '../pages/LabConfigure';
+import LabJoin from '../pages/LabJoin';
+import LabProfile from '../pages/LabProfile';
+import LabEdit from '../pages/LabEdit';
+
 
 class Routes extends Component {
   render() {
@@ -43,9 +50,25 @@ class Routes extends Component {
     };
 
     const labConfigure = () => {
-      return <LabConfigure {...this.props} />;
+      return ( <LabConfigure {...this.props}/> );
+    };
+    const labJoin = () => {
+      return ( <LabJoin {...this.props}/> );
+    }; 
+    const labProfile = (params) => {
+      return ( <LabProfile {...this.props} match={params.match}/> );
+    };
+    const labEdit = (params) => {
+      return ( <LabEdit {...this.props} match={params.match}/> );
+    }; 
+
+    const containerTutorial = (params) => {
+      return ( <ContainerTutorial {...this.props} match={params.match}/> );
     };
 
+    const freezerTutorial = () => {
+      return ( <FreezerTutorial {...this.props}/> );
+    };
     const freezerNew = () => {
       return <FreezerNew {...this.props} />;
     };
@@ -74,8 +97,17 @@ class Routes extends Component {
         </Switch>
 
         <Switch>
-          <Route exact path="/labs/configure" render={labConfigure} />
-        </Switch>
+          <Route path="/labs/:labId/edit" render={labEdit} />
+          <Route exact path='/labs/configure' render={labConfigure} />
+          <Route exact path='/labs/join' render={labJoin} />
+          <Route path="/labs/:labId" render={labProfile} />
+        </Switch>        
+        
+        <Switch>
+          <Route exact path='/tutorials/:labId/container' render={containerTutorial} />
+          <Route exact path='/tutorials/freezer' render={freezerTutorial} />
+        </Switch> 
+
       </main>
     );
   }

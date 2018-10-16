@@ -6,6 +6,15 @@ import './Grid.css';
 
 class Grid extends Component {
 
+  componentDidMount() {
+    window.$('[data-toggle="tooltip"]').tooltip();
+  }  
+  
+  componentDidUpdate() {
+    window.$('[data-toggle="tooltip"]').tooltip();
+  }
+
+
   render() {
 
     const record = this.props.record || null;
@@ -33,6 +42,9 @@ class Grid extends Component {
             row={rowNo}
             col={colNo}
             pos={positionCounter}
+            data-toggle="tooltip"
+            data-placement="top"
+            title={`${this.props.recordType} ${rowNo}, ${colNo} (Empty)`}
             //onDragOver={this.props.onCellDragOver}
             //onDrop={!this.props.parentVisible ? this.props.onCellDrop : null}
             //draggable={false}
@@ -46,15 +58,11 @@ class Grid extends Component {
       <div className="card mt-3">
         <div className="card-header bg-dark text-light">
           <h4 className="card-title mb-0 text-capitalize">
-            {this.props.record.name.length > 0 ? this.props.record.name : (this.props.demo ? "(Select A Lab Name)" : "Loading...")}
+            {this.props.record.name.length > 0 ? this.props.record.name : (this.props.demo ? `(Select A ${this.props.recordType} Name)` : "Loading...")}
           </h4>
         </div>
         <div className="card-body">
-          <p className="card-text">
-            {this.props.record.description || this.props.demo ? "(Select A Lab Description - Optional)" : null }
-            {this.props.record.description.length > 0 ? this.props.record.description : (this.props.demo ? "(Select A Lab Description - Optional)" : null)}
-          </p>
-          <div className="grid-container" style={gridContainerStyles}>
+          <div className="grid-container dropdown" style={gridContainerStyles}>
             {gridContainerChildren}
           </div>
         </div>

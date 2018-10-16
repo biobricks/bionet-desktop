@@ -25,6 +25,10 @@ class Navigation extends Component {
                   <div className="dropdown-divider"></div>
                   <Link className="dropdown-item" to="/users">Users</Link>
                   <Link className="dropdown-item" to="/freezers">Freezers</Link>
+                  <div className="dropdown-divider"></div>
+                  <h5 className="dropdown-header">In Development</h5>
+                  <div className="dropdown-divider"></div>
+                  <Link className="dropdown-item" to="/csvform">Bulk Upload</Link>
                 </div>
               </li>
             ) : null }

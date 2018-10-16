@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import shortid from 'shortid';
 
 class Landing extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      labs: []
+      labs: [],
+      labsJoined: []
     };
     this.getAllLabs = this.getAllLabs.bind(this);
   }
@@ -16,8 +18,28 @@ class Landing extends Component {
     axios.get(`https://api.biohacking.services/labs`)
     .then(res => {
       console.log("response", res.data);
+      let labArray = res.data.data;
+      let labsJoined = [];
+      let labs = [];
+      for(let i = 0; i < labArray.length; i++){
+        let lab = labArray[i];
+        let userId = this.props.currentUser._id;
+        let userExistsInLab = false;
+        for(let j = 0; j < lab.users.length; j++){
+          let labUserId = lab.users[j]._id;
+          if (labUserId === userId){
+            userExistsInLab = true;
+          }
+        }
+        if (!userExistsInLab) {
+          labs.push(lab);
+        } else {
+          labsJoined.push(lab)
+        }
+      }
       this.setState({
-        labs: res.data.data
+        labs,
+        labsJoined
       });        
     })
     .catch(error => {
@@ -30,6 +52,19 @@ class Landing extends Component {
   }
 
   render() {
+
+    const labsJoined = this.state.labsJoined.map((lab, index) => {
+      return (
+        <Link 
+          key={shortid.generate()}
+          className="list-group-item list-group-item-action"
+          to={`/labs/${lab._id}`}
+        >
+          {lab.name}
+        </Link>
+      )
+    }); 
+
     return (
       <div className="container-fluid">
         <div className="row mt-3">
@@ -40,7 +75,7 @@ class Landing extends Component {
                   <h4 className="card-title mb-0 text-capitalize">Hello {this.props.currentUser.username}!</h4>
                 </div>
                 <div className="card-body">
-                  {(this.state.labs.length === 0) ? (
+                  {(this.state.labs.length === 0 && this.state.labsJoined.length === 0) ? (
                     <p className="card-text">
                       Congratulations on your new BioNet installation!<br/> 
                       We can see that you have yet to configure or join your lab(s), let's do that.<br/><br/>
@@ -48,8 +83,19 @@ class Landing extends Component {
                       OR<br/> 
                       <Link to="/labs/join">Join Existing Lab(s)</Link>
                     </p>
-                  ) : null}
+                  ) : null }
+                  {(this.state.labsJoined.length > 0) ? (
+                    <p className="card-text">
+                      Welcome back!<br/> 
+                      Select a Lab:
+                    </p>  
+                  ) : null }
                 </div>
+                {(this.state.labsJoined.length > 0) ? (
+                  <ul className="list-group list-group-flush">
+                    {labsJoined}
+                  </ul>
+                ) : null }
               </div>
             ) : (
               <div className="card">

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import Grid from '../components/partials/Grid';
 
-class LabConfigure extends Component {
+class LabEdit extends Component {
   
   constructor(props) {
     super(props);
@@ -19,9 +19,32 @@ class LabConfigure extends Component {
         columns: 1
       }
     };
+    this.getLab = this.getLab.bind(this);
     this.updateField = this.updateField.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  getLab() {
+    axios.get(`https://api.biohacking.services/labs/${this.props.match.params.labId}`)
+    .then(res => {
+      console.log("response", res.data);
+      let lab = res.data.data;
+      let containers = res.data.children;
+      this.setState({
+        lab,
+        containers,
+        form: {
+          name: lab.name,
+          description: lab.description,
+          rows: lab.rows,
+          columns: lab.columns
+        }
+      });        
+    })
+    .catch(error => {
+      console.error(error);        
+    });    
   }
 
   updateField(e) {
@@ -38,14 +61,14 @@ class LabConfigure extends Component {
   }
 
   submitForm(formData) {
-    if(formData.name.length > 0){
+    if(formData.name.length > 0){      
       let config = {
         'headers': {
           'authorization': `Bearer ${Auth.getToken()}`
         },
         'json': true
       };  
-      axios.post('https://api.biohacking.services/labs/new', formData, config)
+      axios.post(`https://api.biohacking.services/labs/${this.props.match.params.labId}/edit`, formData, config)
       .then(res => {     
         this.setState({ 
           lab: res.data.data,
@@ -73,11 +96,15 @@ class LabConfigure extends Component {
     this.submitForm(form);
   }
 
+  componentDidMount() {
+    this.getLab();
+  }  
+
   render() { 
     let form = this.state.form;
     let formValid = form.name.length > 0 && form.rows > 1 && form.columns > 1;
     if (this.state.redirect === true) {
-      return ( <Redirect to={`/tutorials/${this.state.lab._id}/container`}/> )
+      return ( <Redirect to={`/labs/${this.props.match.params.labId}`}/> )
     }
     return (
       <div className="container-fluid">
@@ -87,12 +114,9 @@ class LabConfigure extends Component {
             { (this.props.isLoggedIn) ? (
               <div className="card mt-3">
                 <div className="card-header bg-dark text-light">
-                  <h4 className="card-title mb-0">Configure Lab</h4>
+                  <h4 className="card-title mb-0">Edit Lab</h4>
                 </div>
                 <div className="card-body">
-                  <p className="card-text">
-                    Let's setup your first Lab! Your Lab will need:
-                  </p>  
                   <form onSubmit={this.handleFormSubmit}>
 
                     <div className="form-group">
@@ -154,7 +178,7 @@ class LabConfigure extends Component {
 
                     <div className="form-group text-center">
                       <div className="btn-group" role="group" aria-label="Basic example">
-                        <Link to="/" className="btn btn-secondary mt-3">Back</Link>
+                        <Link to={`/labs/${this.props.match.params.labId}`} className="btn btn-secondary mt-3">Back</Link>
                         <button 
                           type="submit" 
                           className="btn btn-success mt-3"
@@ -183,4 +207,4 @@ class LabConfigure extends Component {
   }
 }
 
-export default LabConfigure;
+export default LabEdit;
