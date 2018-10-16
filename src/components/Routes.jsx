@@ -19,6 +19,7 @@ import FreezerList from '../pages/FreezerList';
 import LabConfigure from '../pages/LabConfigure';
 import LabJoin from '../pages/LabJoin';
 import LabProfile from '../pages/LabProfile';
+import LabEdit from '../pages/LabEdit';
 
 class Routes extends Component {
   render() {
@@ -56,6 +57,9 @@ class Routes extends Component {
     }; 
     const labProfile = (params) => {
       return ( <LabProfile {...this.props} match={params.match}/> );
+    };
+    const labEdit = (params) => {
+      return ( <LabEdit {...this.props} match={params.match}/> );
     }; 
 
     const containerTutorial = (params) => {
@@ -93,6 +97,7 @@ class Routes extends Component {
         </Switch>
 
         <Switch>
+          <Route path="/labs/:labId/edit" render={labEdit} />
           <Route path="/labs/:labId" render={labProfile} />
           <Route exact path='/labs/configure' render={labConfigure} />
           <Route exact path='/labs/join' render={labJoin} />

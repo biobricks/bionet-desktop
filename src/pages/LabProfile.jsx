@@ -80,10 +80,14 @@ class LabProfile extends Component {
                     {this.state.lab.name}
                     <small className="float-right btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                       <div className="btn-group" role="group" aria-label="First group">
-                        <button type="button" className="btn btn-sm btn-primary">
+                        <Link 
+                          to={`/labs/${this.props.match.params.labId}/edit`}
+                          type="button" 
+                          className="btn btn-sm btn-primary"
+                        >
                           <i className="mdi mdi-playlist-edit mr-1" />
                           Edit
-                        </button>
+                        </Link>
                         <button type="button" className="btn btn-sm btn-success">
                           <i className="mdi mdi-plus-box mr-1" />
                           Add
