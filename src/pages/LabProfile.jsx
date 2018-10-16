@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import shortid from 'shortid';
+import AlertCard from '../components/partials/AlertCard';
 import Grid from '../components/partials/Grid';
 
 class LabProfile extends Component {
@@ -41,6 +42,18 @@ class LabProfile extends Component {
   }  
 
   render() { 
+    let users = this.state.lab.users || [];
+    const members = users.map((user, index) => {
+      return (
+        <Link 
+          key={shortid.generate()}
+          className="list-group-item list-group-item-action"
+          to={`/users/${user._id}`}
+        >
+          {user.username}
+        </Link>
+      )
+    });
 
     const containers = this.state.containers.map((container, index) => {
       return (
@@ -56,10 +69,10 @@ class LabProfile extends Component {
 
     return (
       <div className="container-fluid">
-        <div className="row">
-          
-          <div className="col-12 col-md-7">
-            { (this.props.isLoggedIn) ? (
+        <div className="row">  
+          { (this.props.isLoggedIn) ? (
+            <div className="col-12 col-md-7">
+
               <div className="card mt-3">
                 <div className="card-header bg-dark text-light">
                   <h4 className="card-title mb-0">
@@ -88,14 +101,46 @@ class LabProfile extends Component {
                     {this.state.lab.description}
                   </p>
                 </div>
-                {(containers.length > 0) ? (
+              </div>
+              
+              {(containers.length > 0) ? (
+                <div className="card mt-3">
+                  <div className="card-header bg-dark text-light">
+                    <h4 className="card-title mb-0">
+                      <i className="mdi mdi-teach mr-2" />
+                      Containers
+                    </h4>                      
+                  </div>
                   <ul className="list-group list-group-flush">
                     {containers}
-                  </ul>
-                ) : null }
-              </div>
-            ) : null }  
-          </div>
+                  </ul>                  
+                </div>
+              ) : null }
+
+              {(members.length > 0) ? (
+                <div className="card mt-3">
+                  <div className="card-header bg-dark text-light">
+                    <h5 className="card-title mb-0">
+                      <i className="mdi mdi-account-multiple mr-2" />
+                      Members
+                    </h5>                      
+                  </div>
+                  <ul className="list-group list-group-flush">
+                    {members}
+                  </ul>                  
+                </div>
+              ) : null }
+
+            </div>
+          ) : (
+            <div className="col-12 col-md-7">
+              <AlertCard 
+                title="Login Required"
+                message="You must be logged in to view this content."
+              />
+            </div>
+          ) }  
+          
 
           <div className="col-12 col-md-5">
             {(Object.keys(this.state.lab).length > 0) ? (
