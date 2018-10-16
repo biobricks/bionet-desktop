@@ -55,7 +55,8 @@ class LabProfile extends Component {
       )
     });
 
-    const containers = this.state.containers.map((container, index) => {
+    let containers = this.state.containers || [];
+    const childContainers = containers.map((container, index) => {
       return (
         <Link 
           key={shortid.generate()}

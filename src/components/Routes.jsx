@@ -98,9 +98,9 @@ class Routes extends Component {
 
         <Switch>
           <Route path="/labs/:labId/edit" render={labEdit} />
-          <Route path="/labs/:labId" render={labProfile} />
           <Route exact path='/labs/configure' render={labConfigure} />
           <Route exact path='/labs/join' render={labJoin} />
+          <Route path="/labs/:labId" render={labProfile} />
         </Switch>        
         
         <Switch>

@@ -75,7 +75,7 @@ class Landing extends Component {
                   <h4 className="card-title mb-0 text-capitalize">Hello {this.props.currentUser.username}!</h4>
                 </div>
                 <div className="card-body">
-                  {(this.state.labs.length === 0 && this.state.labsJoined === 0) ? (
+                  {(this.state.labs.length === 0 && this.state.labsJoined.length === 0) ? (
                     <p className="card-text">
                       Congratulations on your new BioNet installation!<br/> 
                       We can see that you have yet to configure or join your lab(s), let's do that.<br/><br/>
