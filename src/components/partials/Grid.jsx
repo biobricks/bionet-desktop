@@ -6,6 +6,15 @@ import './Grid.css';
 
 class Grid extends Component {
 
+  componentDidMount() {
+    window.$('[data-toggle="tooltip"]').tooltip();
+  }  
+  
+  componentDidUpdate() {
+    window.$('[data-toggle="tooltip"]').tooltip();
+  }
+
+
   render() {
 
     const record = this.props.record || null;
@@ -33,6 +42,9 @@ class Grid extends Component {
             row={rowNo}
             col={colNo}
             pos={positionCounter}
+            data-toggle="tooltip"
+            data-placement="top"
+            title={`${rowNo}, ${colNo}`}
             //onDragOver={this.props.onCellDragOver}
             //onDrop={!this.props.parentVisible ? this.props.onCellDrop : null}
             //draggable={false}
