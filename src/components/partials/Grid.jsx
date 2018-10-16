@@ -50,9 +50,6 @@ class Grid extends Component {
           </h4>
         </div>
         <div className="card-body">
-          <p className="card-text">
-            {this.props.record.description.length > 0 ? this.props.record.description : (this.props.demo ? `(Select A ${this.props.recordType} Description - Optional)` : null)}
-          </p>
           <div className="grid-container" style={gridContainerStyles}>
             {gridContainerChildren}
           </div>
