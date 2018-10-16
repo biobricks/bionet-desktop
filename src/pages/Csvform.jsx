@@ -1,44 +1,45 @@
 import React, { Component } from "react";
 import ReactFileReader from "react-file-reader";
 
-class Cvsfrom extends Component {
+class Csvform extends Component {
   constructor() {
     super();
-    this.state = { namesArray: [], submittedFiles: [] };
+    this.state = {};
     this.handleSubmitedFiles = this.handleSubmitedFiles.bind(this);
-    this.showUploadedFiles = this.showUploadedFiles.bind(this);
+    this.renderFileDemo = this.renderFileDemo.bind(this);
   }
+  downloadFile = url => {
+    window.open(url);
+  };
 
   handleSubmitedFiles = files => {
-    // console.log(files.base64);
-    // console.log(files.fileList):
-    let namesArray = [];
-    const filesObject = files.fileList;
+    const fileObject = files.fileList;
+    const fileBase64 = files.base64;
     const reader = new FileReader();
 
-    for (let i = 0; i < this.state.submittedFiles.length; i++) {
-      namesArray.push(this.state.submittedFiles[i].name);
-      this.setState({ namesArray });
-    }
+    this.setState({ fileObject, fileBase64 });
+    this.setState({ fileName: this.state.fileObject[0].name });
+    this.setState({
+      lastModified: this.state.fileObject[0].lastModifiedDate.toString()
+    });
 
-    reader.readAsText(filesObject[0]);
+    reader.readAsText(fileObject[0]);
     reader.onload = () => {
       console.log(reader.result);
     };
-
-    this.setState({ submittedFiles: filesObject });
   };
 
-  showUploadedFiles = () => {
-    return (
-      <ul className="list-group">
-        {this.state.namesArray.map((name, index) => (
-          <li className="list-group-item text-left" key={index}>
-            {name}
+  renderFileDemo = () => {
+    if (this.state.fileName != null) {
+      return (
+        <ul className="list-group">
+          <li className="list-group-item">
+            <a href={this.state.fileBase64}>{this.state.fileName}</a>
           </li>
-        ))}
-      </ul>
-    );
+          <li className="list-group-item">{this.state.lastModified}</li>
+        </ul>
+      );
+    }
   };
 
   render() {
@@ -55,7 +56,7 @@ class Cvsfrom extends Component {
               <div className="card-body">
                 <h3 className="card-title">Use this page to upload CSV file</h3>
                 <ReactFileReader
-                  fileTypes={[".csv"]}
+                  fileTypes={".csv"}
                   base64={true}
                   multipleFiles={false}
                   handleFiles={this.handleSubmitedFiles}
@@ -63,7 +64,7 @@ class Cvsfrom extends Component {
                   <button className="btn">Upload</button>
                 </ReactFileReader>
               </div>
-              {this.showUploadedFiles()}
+              {this.renderFileDemo()}
             </div>
           </div>
         </div>
@@ -72,4 +73,4 @@ class Cvsfrom extends Component {
   }
 }
 
-export default Cvsfrom;
+export default Csvform;
