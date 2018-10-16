@@ -178,7 +178,7 @@ class LabProfile extends Component {
             {(Object.keys(this.state.lab).length > 0) ? (
               <Grid 
                 demo={false}
-                recordType="Container"
+                recordType="Lab"
                 record={this.state.lab}
               />
             ) : null }

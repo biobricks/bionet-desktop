@@ -44,7 +44,7 @@ class Grid extends Component {
             pos={positionCounter}
             data-toggle="tooltip"
             data-placement="top"
-            title={`${rowNo}, ${colNo}`}
+            title={`${this.props.recordType} ${rowNo}, ${colNo} (Empty)`}
             //onDragOver={this.props.onCellDragOver}
             //onDrop={!this.props.parentVisible ? this.props.onCellDrop : null}
             //draggable={false}
@@ -62,7 +62,7 @@ class Grid extends Component {
           </h4>
         </div>
         <div className="card-body">
-          <div className="grid-container" style={gridContainerStyles}>
+          <div className="grid-container dropdown" style={gridContainerStyles}>
             {gridContainerChildren}
           </div>
         </div>
