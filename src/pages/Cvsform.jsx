@@ -14,19 +14,19 @@ class Cvsfrom extends Component {
     // console.log(files.fileList):
     let namesArray = [];
     const filesObject = files.fileList;
-    this.setState({ submittedFiles: filesObject });
     const reader = new FileReader();
-
-    reader.readAsText(filesObject[0]);
-
-    reader.onload = () => {
-      console.log(reader.result);
-    };
 
     for (let i = 0; i < this.state.submittedFiles.length; i++) {
       namesArray.push(this.state.submittedFiles[i].name);
       this.setState({ namesArray });
     }
+
+    reader.readAsText(filesObject[0]);
+    reader.onload = () => {
+      console.log(reader.result);
+    };
+
+    this.setState({ submittedFiles: filesObject });
   };
 
   showUploadedFiles = () => {
