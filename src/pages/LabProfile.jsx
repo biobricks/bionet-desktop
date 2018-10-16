@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import Auth from '../modules/Auth';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import shortid from 'shortid';
 import Grid from '../components/partials/Grid';
 
 class LabProfile extends Component {
@@ -12,6 +11,7 @@ class LabProfile extends Component {
     this.state = {
       redirect: false,
       lab: {},
+      containers: [],
       form: {
         name: "",
         description: "",
@@ -20,9 +20,6 @@ class LabProfile extends Component {
       }
     };
     this.getLab = this.getLab.bind(this);
-    this.updateField = this.updateField.bind(this);
-    this.submitForm = this.submitForm.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   getLab() {
@@ -30,7 +27,8 @@ class LabProfile extends Component {
     .then(res => {
       console.log("response", res.data);
       this.setState({
-        lab: res.data.data
+        lab: res.data.data,
+        containers: res.data.children
       });        
     })
     .catch(error => {
@@ -38,60 +36,24 @@ class LabProfile extends Component {
     });    
   }
 
-  updateField(e) {
-    const field = e.target.name;
-    let form = this.state.form;
-    if(field === 'rows' || field === 'columns') {
-      form[field] = Number(e.target.value);
-    } else {
-      form[field] = e.target.value;
-    }
-    this.setState({
-      form
-    });    
-  }
-
-  submitForm(formData) {
-    if(formData.name.length > 0){
-      let config = {
-        'headers': {
-          'authorization': `Bearer ${Auth.getToken()}`
-        },
-        'json': true
-      };  
-      axios.post('https://api.biohacking.services/labs/new', formData, config)
-      .then(res => {     
-        this.setState({ redirect: true });
-      })
-      .catch(error => {
-        console.error(error);
-        this.setState({ form: formData });
-      });      
-    }  
-  }
-
-  handleFormSubmit(e) {
-    e.preventDefault();
-    let form = this.state.form;
-    this.setState({
-      form: {
-        name: "",
-        description: "",
-        rows: 1, 
-        columns: 1            
-      }
-    });
-    this.submitForm(form);
-  }
-
   componentDidMount() {
     this.getLab();
   }  
 
   render() { 
-    if (this.state.redirect === true) {
-      return ( <Redirect to="/freezers"/> )
-    }
+
+    const containers = this.state.containers.map((container, index) => {
+      return (
+        <Link 
+          key={shortid.generate()}
+          className="list-group-item list-group-item-action"
+          to={`/containers/${container._id}`}
+        >
+          {container.name}
+        </Link>
+      )
+    }); 
+
     return (
       <div className="container-fluid">
         <div className="row">
@@ -100,13 +62,37 @@ class LabProfile extends Component {
             { (this.props.isLoggedIn) ? (
               <div className="card mt-3">
                 <div className="card-header bg-dark text-light">
-                  <h4 className="card-title mb-0">{this.state.lab.name}</h4>
+                  <h4 className="card-title mb-0">
+                    <i className="mdi mdi-teach mr-2" />
+                    {this.state.lab.name}
+                    <small className="float-right btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                      <div className="btn-group" role="group" aria-label="First group">
+                        <button type="button" className="btn btn-sm btn-primary">
+                          <i className="mdi mdi-playlist-edit mr-1" />
+                          Edit
+                        </button>
+                        <button type="button" className="btn btn-sm btn-success">
+                          <i className="mdi mdi-plus-box mr-1" />
+                          Add
+                        </button>
+                        <button type="button" className="btn btn-sm btn-danger">
+                          <i className="mdi mdi-minus-box mr-1" />
+                          Remove
+                        </button>
+                      </div>  
+                    </small>
+                  </h4>
                 </div>
                 <div className="card-body">
                   <p className="card-text">
                     {this.state.lab.description}
                   </p>
                 </div>
+                {(containers.length > 0) ? (
+                  <ul className="list-group list-group-flush">
+                    {containers}
+                  </ul>
+                ) : null }
               </div>
             ) : null }  
           </div>
