@@ -94,7 +94,11 @@ class LabConfigure extends Component {
                     Let's setup your first Lab! Your Lab will need:
                   </p>  
                   <form onSubmit={this.handleFormSubmit}>
-
+                    <input 
+                      name="creator"
+                      type="hidden"
+                      value={this.props.currentUser._id}
+                    />
                     <div className="form-group">
                       <label htmlFor="name">Name</label>
                       <input 
