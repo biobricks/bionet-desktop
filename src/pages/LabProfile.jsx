@@ -136,7 +136,7 @@ class LabProfile extends Component {
                 </div>
               </div>
               
-              {(containers.length > 0) ? (
+              {(childContainers.length > 0) ? (
                 <div className="card mt-3">
                   <div className="card-header bg-dark text-light">
                     <h4 className="card-title mb-0">
@@ -145,7 +145,7 @@ class LabProfile extends Component {
                     </h4>                      
                   </div>
                   <ul className="list-group list-group-flush">
-                    {containers}
+                    {childContainers}
                   </ul>                  
                 </div>
               ) : null }

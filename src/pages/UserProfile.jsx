@@ -45,6 +45,13 @@ class UserProfilePage extends Component {
                   <h4 className="card-title mb-0">{this.state.user.username}</h4>
                 </div>
                 <div className="card-body">
+                  {(this.props.currentUser && this.props.currentUser.imageUrl.length > 0) ? (
+                    <img 
+                      src={this.props.currentUser.imageUrl} 
+                      alt=""
+                      className="img-thumbnail mb-2"
+                    />
+                  ) : null }
                   <p className="card-text">
                     {this.state.user.isAdmin && ( "Admin - " )}
                     joined {this.state.user.createdFromNow}
